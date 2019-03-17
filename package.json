@@ -1,0 +1,19 @@
+{
+  "name": "fandango-monitor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/astroworId/fandango-monitor.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/astroworId/fandango-monitor/issues"
+  },
+  "homepage": "https://github.com/astroworId/fandango-monitor#readme"
+}
