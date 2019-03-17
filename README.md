@@ -4,14 +4,14 @@ Monitor for [Fandango](http://fandango.com/), specifically for when movie ticket
 
 ### How it works:
 
-- Put the link to any movie that has no showtimes available yet in the config file.  Example: Avengers Endgame as of March 17, 2019.
-- Then, run the script and it will send a notification to the webhook you saved in the config file when tickets become available as long as you have the script running.
-- Notification will include a range of upcoming dates of showtimes for the specified movie.
-- Supports Slack and Discord webhooks, more information can be found under setup.
-- Script logs it's processes in both your terminal/console and the log.txt file.
+- Put the link to any movie that has no showtimes available yet in the config file.  Example: Avengers Endgame as of March 17, 2019 found [here](https://www.fandango.com/avengers-endgame-215871/movie-overview)
+- Runnning the script and will send a notification to the webhook you saved in the config file when tickets become available for your specified movie, as long as you have the script running.
+- The notification will include a range of upcoming showtimes for your specified movie.
+- Supports Slack and Discord webhooks for methods of notifications, more information can be found under the setup section below.
+- Fandango Monitor logs its processes in both your terminal/console and the log.txt file.
 
 Example of a successful webhook:
-![image](https://i.imgur.com/T0fix4U.png)
+![webhookexample](https://i.imgur.com/T0fix4U.png)
 
 ### Installation
 
@@ -23,7 +23,7 @@ Edit config.json with your movie link, Discord or Slack webhook, and zip code.  
 
 See how to create a Slack webhook [here](https://api.slack.com/incoming-webhooks).
 
-See how to create Discord webhook [here](https://support.discordapp.com/hc/en-us/articles/228383668-Intro-to-Webhooks).
+See how to create a Discord webhook [here](https://support.discordapp.com/hc/en-us/articles/228383668-Intro-to-Webhooks).
 
 ```sh
 $ git clone https://github.com/astroworId/fandango-monitor.git
@@ -34,11 +34,11 @@ $ node index.js
 
 ### Issues?
 
-DM [me](https://twitter.com/astroworId) on Twitter or on Discord @cactus jack#0001.
+DM [me](https://twitter.com/astroworId) on Twitter or Discord @cactus jack#0001.
 
 ### Proxies?
 
-Not needed, but are supported if you want to add them, paste them in the following format into the the proxies.txt file.
+Not needed, but are supported if you want to add them.  Paste them into the proxies.txt file in one of the formats below.
 
 ```
 ip:port
