@@ -86,7 +86,7 @@ function getMovieDetails() {
         if (e) {
             log('Request error getting movie details...', 'error')
             setTimeout(function () {
-                monitor()
+                getMovieDetails()
             }, config.retryDelay)
             return;
         }
@@ -97,7 +97,7 @@ function getMovieDetails() {
         } else {
             log('Error getting movie details...', 'error')
             setTimeout(function () {
-                monitor()
+                getMovieDetails()
             }, config.retryDelay)
             return;
         }
