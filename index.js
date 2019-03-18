@@ -16,6 +16,9 @@ const zip = config.zip
 let movieLink = config.movieLink
 let webhook = formatWH(config.webhook)
 
+String.prototype.splitLines = function () {
+    return this.split(process.platform === 'win32' ? '\r\n' : '\n');
+}
 function formatProxy(proxy) { // ty hunter
     if (proxy && ['localhost', ''].indexOf(proxy) < 0) {
         proxy = proxy.replace(' ', '_');
@@ -42,7 +45,10 @@ function main() {
     log('------------Discord: @cactus jack#0001-------------', 'log')
     log('------------Twitter: @stroworld--------------------', 'log')
     log('---------------------------------------------------', 'log')
-    console.log(movieLink.length)
+    if (movieLink.length === 0) {
+        log('Please enter a movie...')
+        return;
+    }
     if (movieLink.includes('/movie-overview')) {
         getMovieDetails()
     } else {
@@ -53,11 +59,6 @@ function main() {
             movieLink = movieLink + '/movie-overview'
             getMovieDetails()
         }
-    }
-    console.log(movieLink.length)
-    if (movieLink.length === 0) {
-        log('Please enter a movie...')
-        return;
     }
 }
 function formatWH(url) {
