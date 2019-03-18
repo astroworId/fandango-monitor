@@ -42,6 +42,7 @@ function main() {
     log('------------Discord: @cactus jack#0001-------------', 'log')
     log('------------Twitter: @stroworld--------------------', 'log')
     log('---------------------------------------------------', 'log')
+    console.log(movieLink.length)
     if (movieLink.includes('/movie-overview')) {
         getMovieDetails()
     } else {
@@ -52,6 +53,11 @@ function main() {
             movieLink = movieLink + '/movie-overview'
             getMovieDetails()
         }
+    }
+    console.log(movieLink.length)
+    if (movieLink.length === 0) {
+        log('Please enter a movie...')
+        return;
     }
 }
 function formatWH(url) {
