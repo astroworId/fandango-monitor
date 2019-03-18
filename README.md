@@ -4,8 +4,9 @@ Monitor for [Fandango](http://fandango.com/), specifically for when movie ticket
 
 ### How it works:
 
+- Monitors your specified movie to see when tickets become available.
 - Put the link to any movie that has no showtimes available yet in the config file.  Example: Avengers Endgame as of March 17, 2019 found [here](https://www.fandango.com/avengers-endgame-215871/movie-overview)
-- Runnning the script and will send a notification to the webhook you saved in the config file when tickets become available for your specified movie, as long as you have the script running.
+- Runnning the monitor and will send a notification to the webhook you saved in the config file when tickets become available for your specified movie, as long as you have the monitor running.
 - The notification will include a range of upcoming showtimes for your specified movie.
 - Supports Slack and Discord webhooks for methods of notifications, more information can be found under the setup section below.
 - Fandango Monitor logs its processes in both your terminal/console and the log.txt file.
@@ -15,7 +16,7 @@ Example of a successful webhook:
 
 ### Installation
 
-Fandango Monitor requires [Node.js](http://nodejs.org/) and [npm](http://npmjs.com/).  You must have both of these installed to run the script.
+Fandango Monitor requires [Node.js](http://nodejs.org/) and [npm](http://npmjs.com/).  You must have both of these installed to run the monitor.
 
 ### Setup:
 
@@ -27,7 +28,7 @@ See how to create a Discord webhook [here](https://support.discordapp.com/hc/en-
 
 ```sh
 $ git clone https://github.com/astroworId/fandango-monitor.git
-$ cd fandango-monitor
+$ cd fandango-monitor-master
 $ npm install
 $ node index.js
 ```
