@@ -12,7 +12,7 @@ Monitor for [Fandango](http://fandango.com/), specifically for when movie ticket
 - Fandango Monitor logs its processes in both your terminal/console and the log.txt file.
 
 Example of a successful webhook:
-![webhookexample](https://i.imgur.com/T0fix4U.png)
+![webhookexample](https://i.imgur.com/M2qcEWX.png)
 
 ### Installation
 
