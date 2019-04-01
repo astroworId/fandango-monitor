@@ -164,7 +164,7 @@ function monitor(movieImage, movieTitle, movieId) {
                         let movieLink = 'https://www.fandango.com' + b.movieCalendar.showTimesUrl
                         log('Movie times available...', 'log')
                         request({
-                            url: `https://www.fandango.com/napi/theaterShowtimeGroupings/${movieId}/${startDate}?zip=${zip}`,
+                            url: `https://www.fandango.com/napi/theaterShowtimeGroupings/${movieId}/${startDate}?zip=${zip}&timestamp=${parseInt(Date.now()/1000)}`,
                             method: 'GET',
                             headers: {
                                 'accept': '*/*',
