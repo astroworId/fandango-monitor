@@ -93,6 +93,7 @@ function getMovieDetails() {
     }, function (e, r, b) {
         if (e) {
             log('Request error getting movie details...', 'error')
+            log(e)
             setTimeout(function () {
                 getMovieDetails()
             }, config.retryDelay)
@@ -105,7 +106,7 @@ function getMovieDetails() {
             
             monitor(movieImage, movieTitle, movieId)
         } else {
-            log('Error getting movie details...', 'error')
+            log('Error getting movie details... ' + '[' + r.statusCode + ']', 'error')
             setTimeout(function () {
                 getMovieDetails()
             }, config.retryDelay)
@@ -135,6 +136,7 @@ function monitor(movieImage, movieTitle, movieId) {
     }, function (e, r, b) {
         if (e) {
             log('Request error retrieving movie times...', 'error')
+            log(e)
             fs.appendFileSync('log.txt', `[${moment().format('hh:mm:ss:SS')}] [ERR] Request error retrieving movie times...` + '\n', 'utf-8')
             setTimeout(function () {
                 monitor(movieImage, movieTitle)
@@ -179,6 +181,7 @@ function monitor(movieImage, movieTitle, movieId) {
                         }, function (e, r, b) {
                             if (e) {
                                 log('Request error retrieving show times...', 'error')
+                                log(e)
                                 fs.appendFileSync('log.txt', `[${moment().format('hh:mm:ss:SS')}] [ERR] Request error retrieving movie times...` + '\n', 'utf-8')
                                 setTimeout(function () {
                                     monitor(movieImage, movieTitle)
@@ -298,7 +301,7 @@ function monitor(movieImage, movieTitle, movieId) {
                             } 
                         } else {
                             fs.appendFileSync('log.txt', `[${moment().format('hh:mm:ss:SS')}] [ERR] Error retrieving movie times...` + '\n', 'utf-8')
-                            log('Error retrieving show times...', 'error')
+                            log('Error retrieving show times... ' + '[' + r.statusCode + ']', 'error')
                             setTimeout(function () {
                                 monitor(movieImage, movieTitle)
                             }, config.retryDelay)
@@ -307,14 +310,14 @@ function monitor(movieImage, movieTitle, movieId) {
                     });
                     fs.appendFileSync('log.txt', `[${moment().format('hh:mm:ss:SS')}] [LOG] Movie times available...` + '\n', 'utf-8')
                     } else {
-                        log('Movie times unavailable...', 'error')
+                        log('Movie times unavailable... ' + '[' + r.statusCode + ']', 'error')
                         fs.appendFileSync('log.txt', `[${moment().format('hh:mm:ss:SS')}] [ERR] Movie times unavailable...` + '\n', 'utf-8')
                     }
                 }
             }
         } else {
             fs.appendFileSync('log.txt', `[${moment().format('hh:mm:ss:SS')}] [ERR] Error retrieving movie times...` + '\n', 'utf-8')
-            log('Error retrieving movie times...', 'error')
+            log('Error retrieving movie times... ' + '[' + r.statusCode + ']', 'error')
             setTimeout(function () {
                 monitor(movieImage, movieTitle)
             }, config.retryDelay)
@@ -346,7 +349,7 @@ function notify(movieTitle, movieLink, theaters, v, webhookFormat, webhookFormat
     }
     
     request({
-        url: config.webhook,
+        url: webhook,
         json: true,
         method: 'POST',
         body: message
