@@ -93,7 +93,6 @@ function getMovieDetails() {
     }, function (e, r, b) {
         if (e) {
             log('Request error getting movie details...', 'error')
-            log(e)
             setTimeout(function () {
                 getMovieDetails()
             }, config.retryDelay)
@@ -103,10 +102,9 @@ function getMovieDetails() {
             let movieImage = 'https:' + b.split('<img class="movie-details__movie-img visual-thumb" src="')[1].split('"')[0];
             let movieTitle = b.split('<meta property="twitter:title" content="')[1].split('"')[0];
             let movieId = b.split('"content_id":"')[1].split('"')[0];
-            
             monitor(movieImage, movieTitle, movieId)
         } else {
-            log('Error getting movie details... ' + '[' + r.statusCode + ']', 'error')
+            log('Error getting movie details...', 'error')
             setTimeout(function () {
                 getMovieDetails()
             }, config.retryDelay)
@@ -136,10 +134,9 @@ function monitor(movieImage, movieTitle, movieId) {
     }, function (e, r, b) {
         if (e) {
             log('Request error retrieving movie times...', 'error')
-            log(e)
             fs.appendFileSync('log.txt', `[${moment().format('hh:mm:ss:SS')}] [ERR] Request error retrieving movie times...` + '\n', 'utf-8')
             setTimeout(function () {
-                monitor(movieImage, movieTitle)
+                monitor(movieImage, movieTitle, movieId)
             }, config.retryDelay)
             return;
         }
@@ -151,7 +148,7 @@ function monitor(movieImage, movieTitle, movieId) {
                 fs.appendFileSync('log.txt', `[${moment().format('hh:mm:ss:SS')}] [LOG] Unable to retrieve movie info...` + '\n', 'utf-8')
                 fs.appendFileSync('log.txt', `[${moment().format('hh:mm:ss:SS')}] [LOG] Tickets are not available...` + '\n', 'utf-8')
                 setTimeout(function () {
-                    monitor(movieImage, movieTitle)
+                    monitor(movieImage, movieTitle, movieId)
                 }, config.retryDelay)
                 return;
             } else {
@@ -181,10 +178,9 @@ function monitor(movieImage, movieTitle, movieId) {
                         }, function (e, r, b) {
                             if (e) {
                                 log('Request error retrieving show times...', 'error')
-                                log(e)
                                 fs.appendFileSync('log.txt', `[${moment().format('hh:mm:ss:SS')}] [ERR] Request error retrieving movie times...` + '\n', 'utf-8')
                                 setTimeout(function () {
-                                    monitor(movieImage, movieTitle)
+                                    monitor(movieImage, movieTitle, movieId)
                                 }, config.retryDelay)
                                 return;
                             }
@@ -213,14 +209,14 @@ function monitor(movieImage, movieTitle, movieId) {
                                                         fs.appendFileSync('log.txt', `[${moment().format('hh:mm:ss:SS')}] [LOG] ickets not available yet...` + '\n', 'utf-8')
                                                         log('Tickets not available yet...', 'log')
                                                         setTimeout(function () {
-                                                            monitor(movieImage, movieTitle)
+                                                            monitor(movieImage, movieTitle, movieId)
                                                         }, config.retryDelay)
                                                         return;
                                                     } else if (b.theaterShowtimes.theaters[i].variants[q].amenityGroups[m].showtimes[k].expired === false) {
                                                         fs.appendFileSync('log.txt', `[${moment().format('hh:mm:ss:SS')}] [LOG] All shows are in progress...` + '\n', 'utf-8')
                                                         log('All shows are in progress...', 'log')
                                                         setTimeout(function () {
-                                                            monitor(movieImage, movieTitle)
+                                                            monitor(movieImage, movieTitle, movieId)
                                                         }, config.retryDelay)
                                                         return;
                                                     }
@@ -253,7 +249,6 @@ function monitor(movieImage, movieTitle, movieId) {
                                             }
                                         }
                                     }
-
                                 } else if (ticketAvailability.length > 10 && ticketAvailability.length < 15) {
                                     for (var n = 0; n < (parseInt(ticketAvailability.length/3)); n++) {
                                         webhookFormat += '**Date:** ' + moment().format('MM.DD.YYYY') + ' | ' + '**Showtimes:** ' + showTimes[n] + ' | ' + '**Status:** ' + ticketAvailability[n]+ ' | ' + '[' + '**Ticket Link**' + ']' + `(${ticketLinks[n]})` + '\n' // discord formatting
@@ -301,25 +296,27 @@ function monitor(movieImage, movieTitle, movieId) {
                             } 
                         } else {
                             fs.appendFileSync('log.txt', `[${moment().format('hh:mm:ss:SS')}] [ERR] Error retrieving movie times...` + '\n', 'utf-8')
-                            log('Error retrieving show times... ' + '[' + r.statusCode + ']', 'error')
+                            fs.appendFileSync('log.txt', r + '\n', 'utf-8')
+                            log('Error retrieving show times...', 'error')
                             setTimeout(function () {
-                                monitor(movieImage, movieTitle)
+                                monitor(movieImage, movieTitle, movieId)
                             }, config.retryDelay)
                             return;
                         }
                     });
                     fs.appendFileSync('log.txt', `[${moment().format('hh:mm:ss:SS')}] [LOG] Movie times available...` + '\n', 'utf-8')
                     } else {
-                        log('Movie times unavailable... ' + '[' + r.statusCode + ']', 'error')
+                        log('Movie times unavailable...', 'error')
                         fs.appendFileSync('log.txt', `[${moment().format('hh:mm:ss:SS')}] [ERR] Movie times unavailable...` + '\n', 'utf-8')
                     }
                 }
             }
         } else {
             fs.appendFileSync('log.txt', `[${moment().format('hh:mm:ss:SS')}] [ERR] Error retrieving movie times...` + '\n', 'utf-8')
-            log('Error retrieving movie times... ' + '[' + r.statusCode + ']', 'error')
+            fs.appendFileSync('log.txt', r + '\n', 'utf-8')
+            log('Error retrieving movie times...', 'error')
             setTimeout(function () {
-                monitor(movieImage, movieTitle)
+                monitor(movieImage, movieTitle, movieId)
             }, config.retryDelay)
             return;
         }
@@ -347,7 +344,6 @@ function notify(movieTitle, movieLink, theaters, v, webhookFormat, webhookFormat
             }
         ]
     }
-    
     request({
         url: webhook,
         json: true,
