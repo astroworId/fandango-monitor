@@ -15,7 +15,6 @@ const hasShowtime = [];
 const zip = config.zip
 let movieLink = config.movieLink
 let webhook = formatWH(config.webhook)
-const TestDiscordWebhookArray = ['https://discordapp.com/api/webhooks/474604992779649045/he8Phsr14_Q59F66C9x44HGVF4Bx3Hhd3TB5V7yUYxg-cPT1x6040H1hmbujOtzLBqvd/slack', 'https://discordapp.com/api/webhooks/558073376078561299/i0-ET127MhI23XRO0D_XHG75wxuGRWLOdocGF-zvrjAOoLvkz87yWxM9Qrw7JC94sMIn/slack', 'https://discordapp.com/api/webhooks/558073392301998091/H5E2vcqQrqu7ez9f4httRKFF-xSgUJ3Iq-nOG8uPLkVjwymgjU2gRjxGN3gXphWB2kzy/slack', 'https://discordapp.com/api/webhooks/558073508232691712/i4ZoUyepgPkdAtEOIMkDnu50AWa2Kqt9ZMZDYu066asy8vN-mr2FQeNVWAtGCEmZWE9U/slack', 'https://discordapp.com/api/webhooks/558073599072927806/UcYq8mVGqyDSD7M8bSqAMqLNUhJBrCTWF2fVEiz9Tx2zpClc8SWodFmwgj6I4pdwn8wW/slack', 'https://discordapp.com/api/webhooks/560090235799732234/3uHA8JWzFy_3UhwxQtgPzZLtUBZDtUhcIWqk5W86gEtrVWnnHyDKpBMFPTRnuEZ6xCv8/slack', 'https://discordapp.com/api/webhooks/560090268276097045/FTTprhR2xy25_JWawjdTmHubES2sc5PTcU8Zl_u7CwITesIIIPSHJRefvWBXhhQW5c88/slack', 'https://discordapp.com/api/webhooks/560090321355145217/a8hLRnqAdvtkoP6QxAyqe5Jmj2kLqzipubpJQ7OBU5rk6KORoRyZRvR67aYM3MSKoKJm/slack']
 
 String.prototype.splitLines = function () {
     return this.split(process.platform === 'win32' ? '\r\n' : '\n');
@@ -347,7 +346,7 @@ function notify(movieTitle, movieLink, theaters, v, webhookFormat, webhookFormat
     }
     
     request({
-        url: TestDiscordWebhookArray[Math.floor(Math.random() * TestDiscordWebhookArray.length)],
+        url: config.webhook,
         json: true,
         method: 'POST',
         body: message
